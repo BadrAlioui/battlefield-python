@@ -25,3 +25,11 @@ def drawfield(field):
       else:
         print(" ", end="")
     print(' ')
+
+#create field for the player and the computer
+currentPlayer = [list(('-') * 5) for i in range(5)]
+
+currentComputer = [list(('-') * 5) for i in range(5)]
+
+#to hide the field or the board of the computer
+fieldCommun = [list(('-') * 5) for i in range(5)]
