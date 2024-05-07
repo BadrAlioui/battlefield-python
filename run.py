@@ -1,3 +1,5 @@
+import random
+
 #build a board
 
 #0123456789
@@ -33,3 +35,21 @@ currentComputer = [list(('-') * 5) for i in range(5)]
 
 #to hide the field or the board of the computer
 fieldCommun = [list(('-') * 5) for i in range(5)]
+
+for i in range(4):
+  movecompRow = random.randint(0, 4)
+  movecompColumn = random.randint(0, 4)
+  currentPlayer[movecompRow][movecompColumn] = "@"
+
+for i in range(4):
+  movecompRow = random.randint(0, 4)
+  movecompColumn = random.randint(0, 4)
+  currentComputer[movecompRow][movecompColumn] = "'"
+
+print()
+print(f"{name}'s Board")
+drawfield(currentPlayer)
+print()
+print('----------')
+print('Computer\'s Board: ')
+print()
