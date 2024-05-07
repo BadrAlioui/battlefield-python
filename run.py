@@ -12,3 +12,16 @@ print(
   'Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row:, col: 0'
 )
 print('----------------------------------')
+
+name = input('Please enter your name: \n')
+scores = {"computer": 0, "player": 0}
+
+def drawfield(field):
+  for row in range(5):
+    for col in range(10):
+      if col % 2 == 0:
+        rightColumn = col // 2
+        print(field[row][rightColumn], end="")
+      else:
+        print(" ", end="")
+    print(' ')
