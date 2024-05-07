@@ -53,3 +53,20 @@ print()
 print('----------')
 print('Computer\'s Board: ')
 print()
+
+def field(field):
+    '''
+    board for the computer without showing the ships
+    '''
+  for row in range(5):
+    for col in range(10):
+      if col % 2 == 0:
+        rightColumn = col // 2
+
+        print(fieldCommun[row][rightColumn], end="")
+      else:
+        print(" ", end="")
+    print(' ')
+
+
+field(fieldCommun)
