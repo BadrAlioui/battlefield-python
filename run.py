@@ -9,21 +9,27 @@ import random
 #- - - - - 3
 #- - - - - 4
 
+
+
 import random
 
+# Display the game initialization message
 print('----------------------------------')
 print(
   'Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row: 0, col: 0'
 )
 print('----------------------------------')
 
+# Prompt the user to enter their name
 name = input('Please enter your name: \n')
+# Initialize the scores dictionary
 scores = {"computer": 0, "player": 0}
 
-
+# Function to draw the game board
 def drawfield(field):
   '''
-    This function draws the field'''
+  Draws the game board using the provided array.
+  '''
   for row in range(5):
     for col in range(10):
       if col % 2 == 0:
@@ -33,17 +39,17 @@ def drawfield(field):
         print(" ", end="")
     print(' ')
 
-
+# Create arrays to represent the player and computer boards
 currentPlayer = [list(('-') * 5) for i in range(5)]
-
 currentComputer = [list(('-') * 5) for i in range(5)]
-
 fieldCommun = [list(('-') * 5) for i in range(5)]
 
-
+# Function to generate random numbers for ship positions
 def random_number(gamer):
   '''
-  This function generates a random number for the row and column'''
+  Generates random positions for ships on the board.
+  Takes the board array (either player or computer) as an argument to place the ships.
+  '''
   liste_set = set()
   while len(liste_set) < 4:
     row = random.randint(0, 4)
@@ -56,11 +62,11 @@ def random_number(gamer):
     else:
       currentComputer[movecompRow][movecompColumn] = "'"
 
-
-
+# Populate the boards with ships
 random_number(currentPlayer)
 random_number(currentComputer)
 
+# Display the player's board
 print()
 print(f"{name}'s Board")
 print()
@@ -70,8 +76,10 @@ print('----------')
 print('Computer\'s Board: ')
 print()
 
+# Display the computer's board with ships hidden
 drawfield(fieldCommun)
 
+# Game play loop
 print()
 playAgain = 'y'
 while playAgain == 'y':
@@ -103,13 +111,13 @@ while playAgain == 'y':
   if fieldCommun[moveRow][moveColumn] == '$':
     print('Player hit a ship!')
   else:
-    print('Player missed! this time.')
+    print('Player missed this time.')
   print()
   drawfield(fieldCommun)
   print('-------------------------')
   moveRow = random.randint(0, 4)
   moveColumn = random.randint(0, 4)
-  if currentPlayer[moveRow][moveColumn] == '-' or currentComputer[moveRow][
+  if currentPlayer[moveRow][moveColumn] == '-' or currentPlayer[moveRow][
       moveColumn] == 'X':
     currentPlayer[moveRow][moveColumn] = 'X'
     scores["computer"] += 0
@@ -122,7 +130,7 @@ while playAgain == 'y':
   if currentPlayer[moveRow][moveColumn] == '£':
     print('Computer hit a ship!')
   else:
-    print('Computer missed! this time.')
+    print('Computer missed this time.')
 
   print('-----------------------------')
   print()
@@ -130,7 +138,7 @@ while playAgain == 'y':
   drawfield(currentPlayer)
   print()
   print(
-    f"After this round, The score are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}"
+    f"After this round, The scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}"
   )
   print()
   while True:
@@ -148,5 +156,4 @@ print('Thanks for playing!')
 print()
 drawfield(currentComputer)
 print('-------------------------')
-
 drawfield(currentPlayer)
