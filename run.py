@@ -13,7 +13,7 @@ import random
 
 print('----------------------------------')
 print(
-  'Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row:, col: 0'
+  'Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row: 0, col: 0'
 )
 print('----------------------------------')
 
@@ -44,13 +44,18 @@ fieldCommun = [list(('-') * 5) for i in range(5)]
 def random_number(gamer):
   '''
   This function generates a random number for the row and column'''
-  for i in range(4):
-    movecompRow = random.randint(0, 4)
-    movecompColumn = random.randint(0, 4)
+  liste_set = set()
+  while len(liste_set) < 4:
+    row = random.randint(0, 4)
+    col = random.randint(0, 4)
+    movecompRow = row
+    movecompColumn = col
+    liste_set.add((row, col))
     if gamer == currentPlayer:
       currentPlayer[movecompRow][movecompColumn] = "@"
     else:
       currentComputer[movecompRow][movecompColumn] = "'"
+
 
 
 random_number(currentPlayer)
