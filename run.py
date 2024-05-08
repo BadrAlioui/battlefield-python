@@ -1,18 +1,5 @@
 import random
 
-#build a board
-
-#0123456789
-#- - - - - 0
-#- - - - - 1
-#- - - - - 2
-#- - - - - 3
-#- - - - - 4
-
-
-
-import random
-
 # Display the game initialization message
 print('----------------------------------')
 print(
@@ -72,7 +59,7 @@ print(f"{name}'s Board")
 print()
 drawfield(currentPlayer)
 print()
-print('----------')
+print('----------------------------------')
 print('Computer\'s Board: ')
 print()
 
@@ -106,15 +93,19 @@ while playAgain == 'y':
     fieldCommun[moveRow][moveColumn] = '$'
     scores["player"] += 1
   print()
-
+  print('----------------------------------')
   print(f'Player guessed: ({moveRow}, {moveColumn})')
   if fieldCommun[moveRow][moveColumn] == '$':
+    
     print('Player hit a ship!')
+    print('----------------------------------')
   else:
+    
     print('Player missed this time.')
+    print('----------------------------------')
   print()
   drawfield(fieldCommun)
-  print('-------------------------')
+  print('----------------------------------')
   moveRow = random.randint(0, 4)
   moveColumn = random.randint(0, 4)
   if currentPlayer[moveRow][moveColumn] == '-' or currentPlayer[moveRow][
@@ -132,7 +123,7 @@ while playAgain == 'y':
   else:
     print('Computer missed this time.')
 
-  print('-----------------------------')
+  print('----------------------------------')
   print()
 
   drawfield(currentPlayer)
