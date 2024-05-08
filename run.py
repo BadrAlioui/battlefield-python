@@ -58,9 +58,10 @@ random_number(currentComputer)
 
 print()
 print(f"{name}'s Board")
+print()
 drawfield(currentPlayer)
 print()
-print('----------------------------------')
+print('----------')
 print('Computer\'s Board: ')
 print()
 
@@ -92,17 +93,15 @@ while playAgain == 'y':
     fieldCommun[moveRow][moveColumn] = '$'
     scores["player"] += 1
   print()
-  print('----------------------------------')
+
   print(f'Player guessed: ({moveRow}, {moveColumn})')
   if fieldCommun[moveRow][moveColumn] == '$':
     print('Player hit a ship!')
-    print('----------------------------------')
   else:
     print('Player missed! this time.')
-    print('----------------------------------')
   print()
   drawfield(fieldCommun)
-  print('----------------------------------')
+  print('-------------------------')
   moveRow = random.randint(0, 4)
   moveColumn = random.randint(0, 4)
   if currentPlayer[moveRow][moveColumn] == '-' or currentComputer[moveRow][
@@ -120,7 +119,7 @@ while playAgain == 'y':
   else:
     print('Computer missed! this time.')
 
-  print('----------------------------------')
+  print('-----------------------------')
   print()
 
   drawfield(currentPlayer)
@@ -129,13 +128,20 @@ while playAgain == 'y':
     f"After this round, The score are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}"
   )
   print()
-  print('Would you like to keep playing? (y/n)')
-  playAgain = input().lower()
+  while True:
+    try:
+      playAgain = input('Would you like to keep playing? (y/n)\n').lower()
+      if playAgain != 'y' and playAgain != 'n':
+        raise ValueError("Please enter 'y' or 'n'")
+      else:
+        break
+    except ValueError:
+      print("Please enter 'y' or 'n'")
 
 print()
 print('Thanks for playing!')
 print()
 drawfield(currentComputer)
-print('----------------------------------')
+print('-------------------------')
 
 drawfield(currentPlayer)
