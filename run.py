@@ -1,9 +1,24 @@
+# def attack(field, moveRow, moveColumn, player_game):
+#   if field == currentPlayer: 
+#     hit_boat = '£' 
+#   else:
+#     hit_boat = '$'
+#   if field[moveRow][moveColumn] == '-' or field[moveRow][
+#       moveColumn] == 'X':
+#     field[moveRow][moveColumn] = 'X'
+#     scores[player_game] += 0
+
+#   else:
+#     field[moveRow][moveColumn] = hit_boat
+#     scores[player_game] += 1
+
 import random
 
 # Display the game initialization message
 print('----------------------------------')
 print(
-  'Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row: 0, col: 0'
+  "Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row: 0, col: 0'\nAnd you have 5 turns to sink all the ships\nGood Luck!\n----------------------------------"
+  
 )
 print('----------------------------------')
 
@@ -43,11 +58,13 @@ def random_number(gamer):
     col = random.randint(0, 4)
     movecompRow = row
     movecompColumn = col
-    liste_set.add((row, col))
-    if gamer == currentPlayer:
-      currentPlayer[movecompRow][movecompColumn] = "@"
-    else:
-      currentComputer[movecompRow][movecompColumn] = "'"
+    if row not in liste_set and col not in liste_set:
+    
+      liste_set.add((movecompRow, movecompColumn))
+      if gamer == currentPlayer:
+        currentPlayer[movecompRow][movecompColumn] = "@"
+      else:
+        currentComputer[movecompRow][movecompColumn] = "'"
 
 # Populate the boards with ships
 random_number(currentPlayer)
@@ -69,11 +86,18 @@ drawfield(fieldCommun)
 # Game play loop
 print()
 playAgain = 'y'
-while playAgain == 'y':
-  while True:
+tries = 0
+while playAgain == 'y'and tries < 6:
+  
+  while True :
+    
     try:
       moveRow = int(input("Guess a row between 0 and 4: \n"))
       moveColumn = int(input("Guess a column between 0 and 4: \n"))
+      tries += 1
+      if tries == 6:
+        print('You have run out of tries!')
+        break
       if moveRow < 0 or moveRow > 4 or moveColumn < 0 or moveColumn > 4:
         raise ValueError(
           'Invalid input. Please enter a number between 0 and 4.')
@@ -87,20 +111,24 @@ while playAgain == 'y':
     currentComputer[moveRow][moveColumn] = 'X'
     fieldCommun[moveRow][moveColumn] = 'X'
     scores["player"] += 0
+    
+    
+    
 
   else:
     currentComputer[moveRow][moveColumn] = '$'
     fieldCommun[moveRow][moveColumn] = '$'
     scores["player"] += 1
+    
   print()
   print('----------------------------------')
   print(f'Player guessed: ({moveRow}, {moveColumn})')
   if fieldCommun[moveRow][moveColumn] == '$':
-    
+
     print('Player hit a ship!')
     print('----------------------------------')
   else:
-    
+
     print('Player missed this time.')
     print('----------------------------------')
   print()
@@ -128,16 +156,25 @@ while playAgain == 'y':
 
   drawfield(currentPlayer)
   print()
-  print(
-    f"After this round, The scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}"
-  )
+  if tries < 6:
+    print(
+      f"After this round, The scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}"
+    )
+  else:
+    print('You have run out of tries!')
+    print(f"Finally, scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}")
+    break
   print()
   while True:
     try:
-      playAgain = input('Would you like to keep playing? (y/n)\n').lower()
-      if playAgain != 'y' and playAgain != 'n':
-        raise ValueError("Please enter 'y' or 'n'")
+      if tries < 6:
+        playAgain = input('Would you like to keep playing? (y/n)\n').lower()
+        if playAgain != 'y' and playAgain != 'n':
+          raise ValueError("Please enter 'y' or 'n'")
+        else:
+          break
       else:
+        print('You have run out of tries!')
         break
     except ValueError:
       print("Please enter 'y' or 'n'")
@@ -148,3 +185,5 @@ print()
 drawfield(currentComputer)
 print('-------------------------')
 drawfield(currentPlayer)
+
+  
