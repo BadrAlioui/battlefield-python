@@ -1,3 +1,8 @@
+import random
+from colorama import Fore, init
+init(autoreset=True)
+
+
 # def attack(field, moveRow, moveColumn, player_game):
 #   if field == currentPlayer: 
 #     hit_boat = '£' 
@@ -12,7 +17,6 @@
 #     field[moveRow][moveColumn] = hit_boat
 #     scores[player_game] += 1
 
-import random
 
 # Display the game initialization message
 print('----------------------------------')
@@ -24,9 +28,9 @@ print('----------------------------------')
 
 # Prompt the user to enter their name
 while True:
-  name = input("Enter your Name:\n")
+  name = input(Fore.GREEN + "Enter your Name:\n")
   if not name.isalpha():
-      print ("Enter only name with letters, please.")
+      print (Fore.RED + "Enter only name with letters, please.")
   else:
     break
 # Initialize the scores dictionary
@@ -41,7 +45,19 @@ def drawfield(field):
     for col in range(10):
       if col % 2 == 0:
         rightColumn = col // 2
-        print(field[row][rightColumn], end="")
+        cell = field[row][rightColumn]
+        if cell == "@":
+          print(Fore.GREEN + cell, end="")
+        elif cell == "X":
+          print(Fore.RED + cell, end="")
+        elif cell == '-':
+          print(Fore.WHITE + cell, end="")
+        elif cell == "£":
+          print(Fore.BLUE + cell, end="")
+        elif cell == "$":
+          print(Fore.YELLOW + cell, end="")
+        else:
+          print(Fore.CYAN + cell, end="")
       else:
         print(" ", end="")
     print(' ')
@@ -80,6 +96,7 @@ print()
 print(f"{name}'s Board")
 print()
 drawfield(currentPlayer)
+
 print()
 print('----------------------------------')
 print('Computer\'s Board: ')
@@ -92,25 +109,24 @@ drawfield(fieldCommun)
 print()
 playAgain = 'y'
 tries = 0
-while playAgain == 'y'and tries < 6:
+while playAgain == 'y'and tries < 5:
   
   while True :
     
     try:
+      
       moveRow = int(input("Guess a row between 0 and 4: \n"))
       moveColumn = int(input("Guess a column between 0 and 4: \n"))
-      tries += 1
-      if tries == 6:
-        print('You have run out of tries!')
-        break
-      if moveRow < 0 or moveRow > 4 or moveColumn < 0 or moveColumn > 4:
-        raise ValueError(
-          'Invalid input. Please enter a number between 0 and 4.')
+      
+      
+      if moveRow < 0 or moveRow > 4 or moveColumn < 0 or moveColumn > 4 :
+        raise ValueError(Fore.RED + 'Invalid input. Please enter a number between 0 and 4.')
 
       break
 
     except ValueError:
-      print('Please enter a number between 0 and 4')
+      print(Fore.RED +'Please enter a number between 0 and 4')
+  tries += 1
   if currentComputer[moveRow][moveColumn] == '-' or currentComputer[moveRow][
       moveColumn] == 'X':
     currentComputer[moveRow][moveColumn] = 'X'
@@ -161,28 +177,31 @@ while playAgain == 'y'and tries < 6:
 
   drawfield(currentPlayer)
   print()
-  if tries < 6:
-    print(
+  
+  print(Fore.CYAN + 
       f"After this round, The scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}"
     )
-  else:
-    print('You have run out of tries!')
-    print(f"Finally, scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}")
-    break
+    
+  
   print()
-  while True:
-    try:
-      if tries < 6:
-        playAgain = input('Would you like to keep playing? (y/n)\n').lower()
-        if playAgain != 'y' and playAgain != 'n':
-          raise ValueError("Please enter 'y' or 'n'")
-        else:
-          break
-      else:
-        print('You have run out of tries!')
-        break
-    except ValueError:
-      print("Please enter 'y' or 'n'")
+  if tries < 5:
+    while True:
+      try:
+        
+          playAgain = input('Would you like to keep playing? (y/n)\n').lower()
+          if playAgain != 'y' and playAgain != 'n':
+            raise ValueError(Fore.RED + "Please enter 'y' or 'n'")
+          else:
+            break
+          
+      except ValueError:
+        print(Fore.RED + "Please enter 'y' or 'n'")
+  else:
+    print(Fore.RED + 'You have run out of tries!')
+    
+    print(Fore.CYAN + f"Finally, scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}")
+     
+    break
 
 print()
 print('Thanks for playing!')
