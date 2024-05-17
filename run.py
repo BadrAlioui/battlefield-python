@@ -23,7 +23,12 @@ print(
 print('----------------------------------')
 
 # Prompt the user to enter their name
-name = input('Please enter your name: \n')
+while True:
+  name = input("Enter your Name:\n")
+  if not name.isalpha():
+      print ("Enter only name with letters, please.")
+  else:
+    break
 # Initialize the scores dictionary
 scores = {"computer": 0, "player": 0}
 
