@@ -3,28 +3,15 @@ from colorama import Fore, init
 init(autoreset=True)
 
 
-# def attack(field, moveRow, moveColumn, player_game):
-#   if field == currentPlayer: 
-#     hit_boat = '£' 
-#   else:
-#     hit_boat = '$'
-#   if field[moveRow][moveColumn] == '-' or field[moveRow][
-#       moveColumn] == 'X':
-#     field[moveRow][moveColumn] = 'X'
-#     scores[player_game] += 0
-
-#   else:
-#     field[moveRow][moveColumn] = hit_boat
-#     scores[player_game] += 1
 
 
 # Display the game initialization message
-print('----------------------------------')
+print('**********************************')
 print(
-  "Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row: 0, col: 0'\nAnd you have 5 turns to sink all the ships\nGood Luck!\n----------------------------------"
+  "Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row: 0, col: 0'\nAnd you have 5 turns to sink all the ships\nGood Luck!"
   
 )
-print('----------------------------------')
+print('**********************************')
 
 # Prompt the user to enter their name
 while True:
@@ -99,6 +86,7 @@ drawfield(currentPlayer)
 
 print()
 print('----------------------------------')
+print()
 print('Computer\'s Board: ')
 print()
 
@@ -142,19 +130,19 @@ while playAgain == 'y'and tries < 5:
     scores["player"] += 1
     
   print()
-  print('----------------------------------')
+  print('**********************************')
   print(f'Player guessed: ({moveRow}, {moveColumn})')
   if fieldCommun[moveRow][moveColumn] == '$':
 
     print('Player hit a ship!')
-    print('----------------------------------')
+    print('**********************************')
   else:
 
     print('Player missed this time.')
-    print('----------------------------------')
+    print('**********************************')
   print()
   drawfield(fieldCommun)
-  print('----------------------------------')
+  print('**********************************')
   moveRow = random.randint(0, 4)
   moveColumn = random.randint(0, 4)
   if currentPlayer[moveRow][moveColumn] == '-' or currentPlayer[moveRow][
@@ -165,14 +153,14 @@ while playAgain == 'y'and tries < 5:
   else:
     currentPlayer[moveRow][moveColumn] = '£'
     scores["computer"] += 1
-
+  
   print(f'Computer guessed: ({moveRow}, {moveColumn})')
   if currentPlayer[moveRow][moveColumn] == '£':
     print('Computer hit a ship!')
   else:
     print('Computer missed this time.')
 
-  print('----------------------------------')
+  print('**********************************')
   print()
 
   drawfield(currentPlayer)
