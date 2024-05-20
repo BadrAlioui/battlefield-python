@@ -188,7 +188,12 @@ while playAgain == 'y'and tries < 5:
     print(Fore.RED + 'You have run out of tries!')
     
     print(Fore.CYAN + f"Finally, scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}")
-     
+    if scores['player'] > scores['computer']:
+      print(Fore.GREEN + f"Congratulations {name}! You won!")
+    elif scores['player'] < scores['computer']:
+      print(Fore.RED + f"Sorry {name}, you lost!")
+    else:
+      print(Fore.YELLOW + "It is a DRAW!")
     break
 
 print()
