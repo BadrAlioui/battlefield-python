@@ -35,22 +35,7 @@ Welcome to my game project. This game is designed to be fun and educational.
 
 ## Project Flowchart
 
-```mermaid
-graph TD;
-    A[Start] --> B[Initialize Game]
-    B --> C[Display Main Menu]
-    C --> D{Player Choice}
-    D -->|Play| E[Start Game]
-    D -->|Options| F[Display Options]
-    D -->|Quit| G[End Game]
-    E --> H[Initialize Level]
-    H --> I[Begin Level]
-    I --> J{Level Completed?}
-    J -->|Yes| K[Display Victory Screen]
-    J -->|No| L[Continue Level]
-    K --> C
-    F --> C
-    G --> Z[End]
+
 
 ## Features
 
