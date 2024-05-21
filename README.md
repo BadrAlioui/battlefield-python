@@ -56,7 +56,7 @@ The game is played on a 5x5 board. Both the player and the computer place 4 ship
 
 ## Testing
 
-
+![test](./images/testing.PNG)
 The game has been manually tested to ensure it works correctly with different inputs and scenarios.
 
 ## Deployment
