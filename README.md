@@ -2,7 +2,7 @@
 
 Ultimate BATTLESHIPS is an enhanced version of the classic Battleship game. The objective is to sink all enemy ships by guessing their positions on the board.
 
-
+Click [here](https://battlefield-python-5157ebccf7e2.herokuapp.com/) to play the game
 ## How to Play
 
 The game is played on a 5x5 board. Both the player and the computer place 4 ships on their respective boards. The player has 5 turns to try to sink all the computer's ships.
