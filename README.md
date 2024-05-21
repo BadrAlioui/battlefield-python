@@ -15,6 +15,8 @@ The game is played on a 5x5 board. Both the player and the computer place 4 ship
    - The player must enter their name to start the game.
    - Ships are randomly placed on the player and computer boards.
 
+![Start](./images/startGame.PNG)
+
 2. **Gameplay**:
    - Each turn, the player must guess a position (row and column) to attack the computer's board.
    - The computer also guesses a position on the player's board.
