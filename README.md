@@ -27,6 +27,8 @@ The game is played on a 5x5 board. Both the player and the computer place 4 ship
    - The game ends after 5 turns or when all ships of a player are sunk.
    - Scores are displayed and the winner is determined based on the number of ships sunk.
 
+![score](./images/score.PNG)
+
 ## Features
 
 
