@@ -65,5 +65,5 @@ This project can be run in a local Python environment. To install the dependenci
 
 ```bash
 pip install colorama
-python battleships.py
+python3 run.py
 
