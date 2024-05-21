@@ -7,6 +7,7 @@ Ultimate BATTLESHIPS is an enhanced version of the classic Battleship game. The 
 
 The game is played on a 5x5 board. Both the player and the computer place 4 ships on their respective boards. The player has 5 turns to try to sink all the computer's ships.
 
+![description](./images/explanation.PNG)
 
 ### Game Instructions
 
