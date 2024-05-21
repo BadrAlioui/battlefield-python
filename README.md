@@ -67,3 +67,6 @@ This project can be run in a local Python environment. To install the dependenci
 pip install colorama
 python3 run.py
 
+## Acknowledgements
+- My Mentor Rahul for his ongoing support and feedback
+- The Code Institute's Tutor Support
