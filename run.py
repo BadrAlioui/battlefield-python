@@ -43,12 +43,12 @@ anotherGame = True
 while anotherGame:
 
   # Display the game initialization message
-  print('***************************************************************')
+  print('***************************************************************************')
   print(BANNER)
   print(
     "Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row: 0, col: 0'\nAnd you have 5 turns to sink all the ships\nGood Luck!"
   )
-  print('***************************************************************')
+  print('***************************************************************************')
 
   # Prompt the user to enter their name
   while True:
