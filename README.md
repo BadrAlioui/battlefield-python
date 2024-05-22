@@ -35,7 +35,7 @@ Welcome to my game project. This game is designed to be fun and educational.
 
 ## Project Flowchart
 
-
+![flowchart](./images/flotwart.png)
 
 ## Features
 
