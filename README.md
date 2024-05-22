@@ -67,6 +67,11 @@ Welcome to my game project. This game is designed to be fun and educational.
 ![testName](./images/testName.PNG)
 
 ![test](./images/testing.PNG)
+
+![YorN](./images/entreYorN.PNG)
+
+![AgainGame](./images/againGame.PNG)
+
 The game has been manually tested to ensure it works correctly with different inputs and scenarios.
 
 ## Deployment
