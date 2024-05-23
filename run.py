@@ -108,6 +108,7 @@ while anotherGame:
   print()
   playAgain = 'y'
   tries = 0
+  no_twice = set()
   while playAgain == 'y' and tries < 5:
 
     while True:
@@ -151,8 +152,15 @@ while anotherGame:
     print()
     drawfield(fieldCommun)
     print('**********************************')
-    moveRow = random.randint(0, 4)
-    moveColumn = random.randint(0, 4)
+    # Computer's guess logic
+    while True:
+
+      moveRow = random.randint(0, 4)
+      moveColumn = random.randint(0, 4)
+      if (moveRow, moveColumn) not in no_twice:
+        no_twice.add((moveRow, moveColumn))
+
+        break
     if currentPlayer[moveRow][moveColumn] == '-' or currentPlayer[moveRow][
         moveColumn] == 'X':
       currentPlayer[moveRow][moveColumn] = 'X'
