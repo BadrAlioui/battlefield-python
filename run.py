@@ -1,9 +1,10 @@
 import random
 from colorama import Fore, init
 
+# Initialize color output
 init(autoreset=True)
 
-BANNER = '''                                                                          
+BANNER = '''
  #####    ##   ##### ##### #      ######  ####  #    # # #####   ####     
  #    #  #  #    #     #   #      #      #      #    # # #    # #         
  #####  #    #   #     #   #      #####   ####  ###### # #    #  ####     
@@ -12,237 +13,136 @@ BANNER = '''
  #####  #    #   #     #   ###### ######  ####  #    # # #       ####      
 '''
 
-# Function to draw the game board
 def drawfield(field):
-  '''
-  Draws the game board using the provided array.
-  '''
-  for row in range(5):
-    for col in range(10):
-      if col % 2 == 0:
-        rightColumn = col // 2
-        cell = field[row][rightColumn]
-        if cell == "@":
-          print(Fore.GREEN + cell, end="")
-        elif cell == "X":
-          print(Fore.RED + cell, end="")
-        elif cell == '-':
-          print(Fore.WHITE + cell, end="")
-        elif cell == "£":
-          print(Fore.BLUE + cell, end="")
-        elif cell == "$":
-          print(Fore.YELLOW + cell, end="")
-        else:
-          print(Fore.CYAN + cell, end="")
-      else:
-        print(" ", end="")
-    print(' ')
+    """
+    Draws the game board using the provided 2D list.
+    """
+    for row in field:
+        for cell in row:
+            if cell == '@':
+                print(Fore.GREEN + cell, end=' ')
+            elif cell == 'X':
+                print(Fore.RED + cell, end=' ')
+            elif cell == '-':
+                print(Fore.WHITE + cell, end=' ')
+            elif cell == '£':
+                print(Fore.BLUE + cell, end=' ')
+            elif cell == '$':
+                print(Fore.YELLOW + cell, end=' ')
+            else:
+                print(Fore.CYAN + cell, end=' ')
+        print()
+    print()
 
 
-anotherGame = True
-while anotherGame:
+def random_number(board, symbol):
+    """
+    Place 4 ships randomly on the board using the given symbol.
+    """
+    positions = set()
+    while len(positions) < 4:
+        row = random.randint(0, 4)
+        col = random.randint(0, 4)
+        if (row, col) not in positions:
+            positions.add((row, col))
+            board[row][col] = symbol
 
-  # Display the game initialization message
-  print('***************************************************************************')
-  print(BANNER)
-  print(
-    "Welcome to Ultimate BATTLESHIPS! !\nBoard size: 5. Number of ships : 4\nTop left corner is row: 0, col: 0'\nAnd you have 5 turns to sink all the ships\nGood Luck!"
-  )
-  print('***************************************************************************')
 
-  # Prompt the user to enter their name
-  while True:
-    name = input(Fore.GREEN + "Enter your Name:\n")
-    if not name.isalpha():
-      print(Fore.RED + "Enter only name with letters, please.")
-    else:
-      break
-  # Initialize the scores dictionary
-  scores = {"computer": 0, "player": 0}
-
-  # Create arrays to represent the player and computer boards
-  currentPlayer = [list(('-') * 5) for i in range(5)]
-  currentComputer = [list(('-') * 5) for i in range(5)]
-  fieldCommun = [list(('-') * 5) for i in range(5)]
-
-  # Function to generate random numbers for ship positions
-  def random_number(gamer):
-    '''
-    Generates random positions for ships on the board.
-    Takes the board array (either player or computer) as an argument to place the ships.
-    '''
-    liste_set = set()
-    while len(liste_set) < 4:
-      row = random.randint(0, 4)
-      col = random.randint(0, 4)
-      movecompRow = row
-      movecompColumn = col
-      if row not in liste_set and col not in liste_set:
-
-        liste_set.add((movecompRow, movecompColumn))
-        if gamer == currentPlayer:
-          currentPlayer[movecompRow][movecompColumn] = "@"
-        else:
-          currentComputer[movecompRow][movecompColumn] = "'"
-
-  # Populate the boards with ships
-  random_number(currentPlayer)
-  random_number(currentComputer)
-
-  # Display the player's board
-  print()
-  print(f"{name}'s Board")
-  print()
-  drawfield(currentPlayer)
-
-  print()
-  print('----------------------------------')
-  print()
-  print('Computer\'s Board: ')
-  print()
-
-  # Display the computer's board with ships hidden
-  drawfield(fieldCommun)
-
-  # Game play loop
-  print()
-  playAgain = 'y'
-  tries = 0
-  no_twice = set()
-  while playAgain == 'y' and tries < 5:
-
+def get_valid_name():
+    """
+    Prompt the user for a name containing only letters.
+    """
     while True:
+        name = input(Fore.GREEN + 'Enter your name: ')
+        if name.isalpha():
+            return name
+        print(Fore.RED + 'Name must contain only letters. Please try again.')
 
-      try:
 
-        moveRow = int(input("Guess a row between 0 and 4: \n"))
-        moveColumn = int(input("Guess a column between 0 and 4: \n"))
-
-        if moveRow < 0 or moveRow > 4 or moveColumn < 0 or moveColumn > 4:
-          raise ValueError(
-            Fore.RED + 'Invalid input. Please enter a number between 0 and 4.')
-
-        break
-
-      except ValueError:
-        print(Fore.RED + 'Please enter a number between 0 and 4')
-    tries += 1
-    if currentComputer[moveRow][moveColumn] == '-' or currentComputer[moveRow][
-        moveColumn] == 'X':
-      currentComputer[moveRow][moveColumn] = 'X'
-      fieldCommun[moveRow][moveColumn] = 'X'
-      scores["player"] += 0
-
-    else:
-      currentComputer[moveRow][moveColumn] = '$'
-      fieldCommun[moveRow][moveColumn] = '$'
-      scores["player"] += 1
-
-    print()
-    print('**********************************')
-    print(f'Player guessed: ({moveRow}, {moveColumn})')
-    if fieldCommun[moveRow][moveColumn] == '$':
-
-      print('Player hit a ship!')
-      print('**********************************')
-    else:
-
-      print('Player missed this time.')
-      print('**********************************')
-    print()
-    drawfield(fieldCommun)
-    print('**********************************')
-    # Computer's guess logic
+def get_valid_guess(already_guessed):
+    """
+    Prompt for a row and column guess, ensure integers 0-4 and not guessed before.
+    """
     while True:
-
-      moveRow = random.randint(0, 4)
-      moveColumn = random.randint(0, 4)
-      if (moveRow, moveColumn) not in no_twice:
-        no_twice.add((moveRow, moveColumn))
-
-        break
-    if currentPlayer[moveRow][moveColumn] == '-' or currentPlayer[moveRow][
-        moveColumn] == 'X':
-      currentPlayer[moveRow][moveColumn] = 'X'
-      scores["computer"] += 0
-
-    else:
-      currentPlayer[moveRow][moveColumn] = '£'
-      scores["computer"] += 1
-
-    print(f'Computer guessed: ({moveRow}, {moveColumn})')
-    if currentPlayer[moveRow][moveColumn] == '£':
-      print('Computer hit a ship!')
-    else:
-      print('Computer missed this time.')
-
-    print('**********************************')
-    print()
-
-    drawfield(currentPlayer)
-    print()
-
-    print(
-      Fore.CYAN +
-      f"After this round, The scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}"
-    )
-
-    print()
-    if tries < 5:
-      while True:
         try:
-
-          playAgain = input('Would you like to keep playing? (y/n)\n').lower()
-          if playAgain != 'y' and playAgain != 'n':
-            raise ValueError(Fore.RED + "Please enter 'y' or 'n'")
-          elif playAgain == 'n':
-
-            break
-            anotherGame = False
-          else:
-            break
-
+            row = int(input('Guess a row (0-4): '))
+            col = int(input('Guess a column (0-4): '))
+            if not (0 <= row <= 4 and 0 <= col <= 4):
+                raise ValueError
+            if (row, col) in already_guessed:
+                print(Fore.RED + 'You\'ve already guessed that location. Choose another.')
+                continue
+            return row, col
         except ValueError:
-          print(Fore.RED + "Please enter 'y' or 'n'")
+            print(Fore.RED + 'Invalid input. Enter numbers between 0 and 4.')
+
+
+def main():
+    print('*' * 75)
+    print(BANNER)
+    print('Welcome to Ultimate BATTLESHIPS!')
+    print('Board size: 5x5, Ships per side: 4, Turns: 5')
+    print('*' * 75)
+
+    name = get_valid_name()
+    player_score = 0
+    computer_score = 0
+
+    # Initialize boards
+    player_board = [['-' for _ in range(5)] for _ in range(5)]
+    computer_board = [['-' for _ in range(5)] for _ in range(5)]
+    display_board = [['-' for _ in range(5)] for _ in range(5)]
+
+    # Place ships
+    random_number(player_board, '@')
+    random_number(computer_board, "'")
+
+    print(f"\n{name}'s Board:")
+    drawfield(player_board)
+    print("Computer's Board:")
+    drawfield(display_board)
+
+    guessed = set()
+    turns = 0
+    while turns < 5 and player_score < 4 and computer_score < 4:
+        # Player's turn
+        row, col = get_valid_guess(guessed)
+        guessed.add((row, col))
+        turns += 1
+
+        if computer_board[row][col] == "'":
+            print(Fore.YELLOW + 'Hit! You sank an enemy ship!')
+            display_board[row][col] = '$'
+            player_score += 1
+        else:
+            print(Fore.RED + 'Miss!')
+            display_board[row][col] = 'X'
+
+        drawfield(display_board)
+
+        # Computer's turn
+        comp_row, comp_col = get_valid_guess(guessed)
+        guessed.add((comp_row, comp_col))
+        print(f"Computer guesses: ({comp_row}, {comp_col})")
+        if player_board[comp_row][comp_col] == '@':
+            print(Fore.BLUE + 'Computer hit your ship!')
+            player_board[comp_row][comp_col] = '£'
+            computer_score += 1
+        else:
+            print(Fore.WHITE + 'Computer missed.')
+
+        drawfield(player_board)
+        print(Fore.CYAN + f"Score -> {name}: {player_score} | Computer: {computer_score}")
+        print('-' * 50)
+
+    # Game result
+    if player_score > computer_score:
+        print(Fore.GREEN + f"Congratulations {name}, you won!")
+    elif player_score < computer_score:
+        print(Fore.RED + f"Sorry {name}, you lost.")
     else:
-      print(Fore.RED + 'You have run out of tries!')
-
-      print(
-        Fore.CYAN +
-        f"Finally, scores are: \n{name}: {scores['player']}.  Computer:  {scores['computer']}"
-      )
-      if scores['player'] > scores['computer']:
-        print(Fore.GREEN + f"Congratulations {name}! You won!")
-      elif scores['player'] < scores['computer']:
-        print(Fore.RED + f"Sorry {name}, you lost!")
-      else:
-        print(Fore.YELLOW + "It is a DRAW!")
-      break
-
-  print()
-  print('Thanks for playing!')
-  print()
-  drawfield(currentComputer)
-  print('-------------------------')
-  drawfield(currentPlayer)
-  print()
-  while True:
-    if playAgain == 'n':      
-      anotherGame = False
-      break
-    anotherGame = input('Would you like to play another game? (y/n)\n').lower()
-    if anotherGame != 'y' and anotherGame != 'n':
-      print(Fore.RED + "Please enter 'y' or 'n'")
-    elif anotherGame == 'n':
-      print(Fore.CYAN + 'Thanks for playing!')
-      anotherGame = False
-      break
-    elif anotherGame == 'y':
-      anotherGame = True
-      break
+        print(Fore.YELLOW + "It's a draw!")
 
 
-  
-
-  
-
+if __name__ == '__main__':
+    main()
