@@ -143,6 +143,16 @@ def main():
     else:
         print(Fore.YELLOW + "It's a draw!")
 
+    # Ask to play again
+    while True:
+            play_again = input('Would you like to play another game? (y/n)\n').lower()
+            if play_again in ('y', 'n'):
+                break
+            print(Fore.RED + "Please enter 'y' or 'n'.")
 
+    print(Fore.CYAN + 'Thanks for playing!')
+
+if __name__ == '__main__':
+    main()
 if __name__ == '__main__':
     main()
