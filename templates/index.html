@@ -10,7 +10,8 @@
     <p><strong>{{ feedback }}</strong></p>
   {% endif %}
 
-  <p>Turn {{ turns }}/{{ remaining + turns }} — {{ remaining }} turns remaining</p>
+{% set remaining = 5 - turns %}
+<p>Turn {{ turns }}/5 — {{ remaining }} turns remaining</p>
   <p>Score — You: {{ player_score }} | Computer: {{ computer_score }}</p>
 
   <table>
