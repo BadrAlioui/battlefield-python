@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ultimate Battleships</title>
+</head>
+<body>
+  <h1>Ultimate Battleships</h1>
+  {% if feedback %}
+    <p><strong>{{ feedback }}</strong></p>
+  {% endif %}
+
+  <p>Turn {{ turns }}/{{ remaining + turns }} — {{ remaining }} turns remaining</p>
+  <p>Score — You: {{ player_score }} | Computer: {{ computer_score }}</p>
+
+  <table>
+    {% for row in board %}
+      <tr>
+        {% for cell in row %}
+          <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+
+  {% if not done %}
+    <form method="post">
+      <label>Row: <input name="row" type="number" min="0" max="4" required></label>
+      <label>Col: <input name="col" type="number" min="0" max="4" required></label>
+      <button type="submit">Fire!</button>
+    </form>
+  {% else %}
+    <h2>Game Over!</h2>
+    <h3>Final Boards</h3>
+
+    <h4>Your Board</h4>
+    <table>
+      {% for row in player_board %}
+        <tr>
+          {% for cell in row %}
+            <td>{{ cell }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+</body>
+</html>
