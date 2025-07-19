@@ -85,66 +85,73 @@ def main():
     print('*' * 75)
 
     name = get_valid_name()
-    player_score = 0
-    computer_score = 0
+    play_again = 'y'
+    while play_again == 'y':
+        player_score = 0
+        computer_score = 0
+        player_board = [['-' for _ in range(5)] for _ in range(5)]
+        computer_board = [['-' for _ in range(5)] for _ in range(5)]
+        display_board = [['-' for _ in range(5)] for _ in range(5)]
 
-    # Initialize boards
-    player_board = [['-' for _ in range(5)] for _ in range(5)]
-    computer_board = [['-' for _ in range(5)] for _ in range(5)]
-    display_board = [['-' for _ in range(5)] for _ in range(5)]
+        # Place ships
+        random_number(player_board, '@')
+        random_number(computer_board, "'")
 
-    # Place ships
-    random_number(player_board, '@')
-    random_number(computer_board, "'")
-
-    print(f"\n{name}'s Board:")
-    drawfield(player_board)
-    print("Computer's Board:")
-    drawfield(display_board)
-
-    guessed = set()
-    turns = 0
-    while turns < 5 and player_score < 4 and computer_score < 4:
-        # Player's turn
-        row, col = get_valid_guess(guessed)
-        guessed.add((row, col))
-        turns += 1
-
-        if computer_board[row][col] == "'":
-            print(Fore.YELLOW + 'Hit! You sank an enemy ship!')
-            display_board[row][col] = '$'
-            player_score += 1
-        else:
-            print(Fore.RED + 'Miss!')
-            display_board[row][col] = 'X'
-
+        print(f"\n{name}'s Board:")
+        drawfield(player_board)
+        print("Computer's Board:")
         drawfield(display_board)
 
-        # Computer's turn
-        comp_row, comp_col = get_valid_guess(guessed)
-        guessed.add((comp_row, comp_col))
-        print(f"Computer guesses: ({comp_row}, {comp_col})")
-        if player_board[comp_row][comp_col] == '@':
-            print(Fore.BLUE + 'Computer hit your ship!')
-            player_board[comp_row][comp_col] = '£'
-            computer_score += 1
+        player_guessed = set()
+        computer_guessed = set()
+        turns = 0
+
+        while turns < 5 and player_score < 4 and computer_score < 4:
+            # Player's turn
+            row, col = get_valid_guess(player_guessed)
+            player_guessed.add((row, col))
+            turns += 1
+
+            if computer_board[row][col] == "'":
+                print(Fore.YELLOW + 'Hit! You sank an enemy ship!')
+                display_board[row][col] = '$'
+                player_score += 1
+            else:
+                print(Fore.RED + 'Miss!')
+                display_board[row][col] = 'X'
+
+            drawfield(display_board)
+
+            # Computer's turn
+            while True:
+                comp_row = random.randint(0, 4)
+                comp_col = random.randint(0, 4)
+                if (comp_row, comp_col) not in computer_guessed:
+                    computer_guessed.add((comp_row, comp_col))
+                    break
+
+            print(f"Computer guesses: ({comp_row}, {comp_col})")
+            if player_board[comp_row][comp_col] == '@':
+                print(Fore.BLUE + 'Computer hit your ship!')
+                player_board[comp_row][comp_col] = '£'
+                computer_score += 1
+            else:
+                print(Fore.WHITE + 'Computer missed.')
+
+            drawfield(player_board)
+            print(Fore.CYAN + f"Score -> {name}: {player_score} | Computer: {computer_score}")
+            print('-' * 50)
+
+        # Game result
+        if player_score > computer_score:
+            print(Fore.GREEN + f"Congratulations {name}, you won!")
+        elif player_score < computer_score:
+            print(Fore.RED + f"Sorry {name}, you lost.")
         else:
-            print(Fore.WHITE + 'Computer missed.')
+            print(Fore.YELLOW + "It's a draw!")
 
-        drawfield(player_board)
-        print(Fore.CYAN + f"Score -> {name}: {player_score} | Computer: {computer_score}")
-        print('-' * 50)
-
-    # Game result
-    if player_score > computer_score:
-        print(Fore.GREEN + f"Congratulations {name}, you won!")
-    elif player_score < computer_score:
-        print(Fore.RED + f"Sorry {name}, you lost.")
-    else:
-        print(Fore.YELLOW + "It's a draw!")
-
-    # Ask to play again
-    while True:
+        # Ask to play again
+        while True:
             play_again = input('Would you like to play another game? (y/n)\n').lower()
             if play_again in ('y', 'n'):
                 break
@@ -154,4 +161,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
