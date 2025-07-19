@@ -13,7 +13,7 @@ BANNER = '''
  #####  #    #   #     #   ###### ######  ####  #    # # #       ####      
 '''
 
-def drawfield(field):
+def draw_field(field):
     """
     Draws the game board using the provided 2D list.
     """
@@ -98,9 +98,9 @@ def main():
         random_number(computer_board, "'")
 
         print(f"\n{name}'s Board:")
-        drawfield(player_board)
+        draw_field(player_board)
         print("Computer's Board:")
-        drawfield(display_board)
+        draw_field(display_board)
 
         player_guessed = set()
         computer_guessed = set()
@@ -108,6 +108,7 @@ def main():
 
         while turns < 5 and player_score < 4 and computer_score < 4:
             # Player's turn
+            print(Fore.CYAN + f"Turn {turns+1}/5 — {5-turns} turns remaining")
             row, col = get_valid_guess(player_guessed)
             player_guessed.add((row, col))
             turns += 1
@@ -120,7 +121,7 @@ def main():
                 print(Fore.RED + 'Miss!')
                 display_board[row][col] = 'X'
 
-            drawfield(display_board)
+            draw_field(display_board)
 
             # Computer's turn
             while True:
@@ -138,7 +139,7 @@ def main():
             else:
                 print(Fore.WHITE + 'Computer missed.')
 
-            drawfield(player_board)
+            draw_field(player_board)
             print(Fore.CYAN + f"Score -> {name}: {player_score} | Computer: {computer_score}")
             print('-' * 50)
 
@@ -149,6 +150,9 @@ def main():
             print(Fore.RED + f"Sorry {name}, you lost.")
         else:
             print(Fore.YELLOW + "It's a draw!")
+
+        print("\nComputer's final board:")
+        draw_field(computer_board)
 
         # Ask to play again
         while True:
