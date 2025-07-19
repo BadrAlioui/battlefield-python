@@ -3,47 +3,84 @@
 <head>
   <meta charset="utf-8">
   <title>Ultimate Battleships</title>
+  <style>
+    table { border-collapse: collapse; }
+    td { width: 2em; height: 2em; text-align: center; border: 1px solid #333; }
+    .hit { background: yellow; }
+    .miss { background: lightgray; }
+  </style>
 </head>
 <body>
   <h1>Ultimate Battleships</h1>
+
   {% if feedback %}
     <p><strong>{{ feedback }}</strong></p>
   {% endif %}
 
-{% set remaining = 5 - turns %}
-<p>Turn {{ turns }}/5 — {{ remaining }} turns remaining</p>
+  {# Calcul des tours restants #}
+  {% set remaining = TOTAL_TURNS - turns %}
+  <p>Turn {{ turns }}/{{ TOTAL_TURNS }} — {{ remaining }} turns remaining</p>
   <p>Score — You: {{ player_score }} | Computer: {{ computer_score }}</p>
 
+  {# Plateau visible du joueur (où on voit X et $) #}
+  <h2>Your view of the enemy board</h2>
   <table>
     {% for row in board %}
       <tr>
         {% for cell in row %}
-          <td>{{ cell }}</td>
+          <td class="{% if cell=='$' %}hit{% elif cell=='X' %}miss{% endif %}">
+            {{ cell }}
+          </td>
         {% endfor %}
       </tr>
     {% endfor %}
   </table>
 
   {% if not done %}
+    {# Formulaire pour jouer un tour #}
     <form method="post">
-      <label>Row: <input name="row" type="number" min="0" max="4" required></label>
-      <label>Col: <input name="col" type="number" min="0" max="4" required></label>
+      <label>Row:
+        <input name="row" type="number" min="0" max="4" required>
+      </label>
+      <label>Col:
+        <input name="col" type="number" min="0" max="4" required>
+      </label>
       <button type="submit">Fire!</button>
     </form>
   {% else %}
+    {# Partie terminée : on affiche les deux plateaux finaux #}
     <h2>Game Over!</h2>
-    <h3>Final Boards</h3>
 
-    <h4>Your Board</h4>
+    <h3>Your final board (your ships & computer hits)</h3>
     <table>
       {% for row in player_board %}
         <tr>
           {% for cell in row %}
-            <td>{{ cell }}</td>
+            <td class="{% if cell=='£' %}hit{% elif cell=='X' %}miss{% endif %}">
+              {{ cell }}
+            </td>
           {% endfor %}
         </tr>
       {% endfor %}
     </table>
+
+    <h3>Computer's final board (where your shots landed)</h3>
+    <table>
+      {% for row in computer_board %}
+        <tr>
+          {% for cell in row %}
+            <td class="{% if cell=='$' %}hit{% elif cell=='X' %}miss{% endif %}">
+              {{ cell }}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+
+    {# Bouton Rejouer : appelle une route '/reset' pour clear session et redirect #}
+    <form action="{{ url_for('reset') }}" method="post">
+      <button type="submit">Rejouer</button>
+    </form>
   {% endif %}
 </body>
 </html>
