@@ -1,5 +1,18 @@
+from flask import Flask, render_template, request
 import random
 from colorama import Fore, init
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    board = initialize_board…  # ta logique
+    feedback = None
+    if request.method == 'POST':
+        row = int(request.form['row'])
+        col = int(request.form['col'])
+        # traite le tir et mets à jour board et feedback
+    return render_template('index.html', board=board, feedback=feedback)
 
 # Initialize color output
 init(autoreset=True)
